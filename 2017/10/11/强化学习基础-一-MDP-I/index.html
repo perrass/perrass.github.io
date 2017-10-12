@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Shelter">
 <meta property="og:description" content="Markov Decision Processes马尔科夫决策过程的定义  一组状态(states), $s\in S$ 一组行为(actions), $a\in A$ 一个转移方程(transition function), $T(s, a, s’)$, 意为从状态$s$转到新状态$s’$的概率, $P(s’|s, a)$ 一个奖励方程(reward function), $R(s, a, s’">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-11T09:36:15.498Z">
+<meta property="og:updated_time" content="2017-10-11T10:04:54.178Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="强化学习基础(一) -- MDP(I)">
 <meta name="twitter:description" content="Markov Decision Processes马尔科夫决策过程的定义  一组状态(states), $s\in S$ 一组行为(actions), $a\in A$ 一个转移方程(transition function), $T(s, a, s’)$, 意为从状态$s$转到新状态$s’$的概率, $P(s’|s, a)$ 一个奖励方程(reward function), $R(s, a, s’">
@@ -351,7 +351,29 @@
 <li>一个开始状态(start state)</li>
 <li>可能有终止状态(terminal state)</li>
 </ul>
-<p>马尔科夫决策过程并不是deterministic搜索问题, deterministic是指, $T = [0.1, 0.8, 0.1]$, 新状态会固定为0.8对应的状态</p>
+<p>Notes: </p>
+<ul>
+<li>马尔科夫决策过程并不是deterministic搜索问题, deterministic是指, $T = [0.1, 0.8, 0.1]$, 新状态会固定为0.8对应的状态</li>
+<li>Markov一般意味着给定当前的状态，过去和未来的状态是相互独立的，对MDP来说，<strong>Markov意味着行动的结果仅依赖当前的状态</strong></li>
+<li>每一个MDP的状态都对应一个expectimax-like search tree, 因此MDP过程也是一系列效用过程的集合(Utilities of Sequences), 于是会有一些列涉及到经济学上效用最优的问题<ul>
+<li>多或少: [1, 2, 3] 或 [2, 3, 4]</li>
+<li>当下或将来: [1, 0, 0] 或 [0, 0, 1]</li>
+</ul>
+</li>
+</ul>
+<p>其他参数</p>
+<ul>
+<li><strong>最优策略</strong> $\pi *: S \to A$<ul>
+<li>策略(policy) $\pi$是每个状态的一个行为</li>
+<li>最优策略是效用最大化的策略</li>
+</ul>
+</li>
+<li>折扣(discounting): $\gamma$<ul>
+<li>计算机视角: 帮助算法收敛</li>
+<li>经济学假设: 在回报相同时，即刻的回报的效用，大于将来回报的效用</li>
+</ul>
+</li>
+</ul>
 
       
     </div>

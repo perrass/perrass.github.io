@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="NetConvReLU">
+<meta name="description" content="预处理 将图片的尺寸统一变为$256 \times 256$ 每个像素减去整个训练集的RGB的平均值，因此，训练是以centered raw RGB values  卷积 &amp;amp; 池化Stride &amp;gt; 1的动机: 一般情况下，卷积层的特征图是指数递增的，假设，图像输入是$256\times256$，卷积核是$3\times 3$，特征图是384层，那么，每张图片都会有$(256-3+1)">
 <meta name="keywords" content="CNN Basics,Computer Vision,Deep Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图像分类(一) -- AlexNet">
 <meta property="og:url" content="http://yoursite.com/2017/10/10/图像分类(一) -- AlexNet/index.html">
 <meta property="og:site_name" content="Shelter">
-<meta property="og:description" content="NetConvReLU">
+<meta property="og:description" content="预处理 将图片的尺寸统一变为$256 \times 256$ 每个像素减去整个训练集的RGB的平均值，因此，训练是以centered raw RGB values  卷积 &amp;amp; 池化Stride &amp;gt; 1的动机: 一般情况下，卷积层的特征图是指数递增的，假设，图像输入是$256\times256$，卷积核是$3\times 3$，特征图是384层，那么，每张图片都会有$(256-3+1)">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-10T09:06:20.184Z">
+<meta property="og:updated_time" content="2017-10-12T00:55:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="图像分类(一) -- AlexNet">
-<meta name="twitter:description" content="NetConvReLU">
+<meta name="twitter:description" content="预处理 将图片的尺寸统一变为$256 \times 256$ 每个像素减去整个训练集的RGB的平均值，因此，训练是以centered raw RGB values  卷积 &amp;amp; 池化Stride &amp;gt; 1的动机: 一般情况下，卷积层的特征图是指数递增的，假设，图像输入是$256\times256$，卷积核是$3\times 3$，特征图是384层，那么，每张图片都会有$(256-3+1)">
 
 
 
@@ -342,7 +342,24 @@
       
 
       
-        <h3 id="Net"><a href="#Net" class="headerlink" title="Net"></a>Net</h3><h3 id="Conv"><a href="#Conv" class="headerlink" title="Conv"></a>Conv</h3><h3 id="ReLU"><a href="#ReLU" class="headerlink" title="ReLU"></a>ReLU</h3>
+        <h3 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h3><ul>
+<li>将图片的尺寸统一变为$256 \times 256$</li>
+<li>每个像素减去整个训练集的RGB的平均值，因此，训练是以<strong>centered raw RGB values</strong></li>
+</ul>
+<h3 id="卷积-amp-池化"><a href="#卷积-amp-池化" class="headerlink" title="卷积 &amp; 池化"></a>卷积 &amp; 池化</h3><p><strong>Stride &gt; 1的动机</strong>: 一般情况下，卷积层的特征图是指数递增的，假设，图像输入是$256\times256$，卷积核是$3\times 3$，特征图是384层，那么，每张图片都会有$(256-3+1)^2  \times 384 = 24774144$个特征，但是，如果通过大于1的stride，将输入的大小变为$8\times 8$，那么传递给分类器的特征数就会减少为18816个。很大程度上<strong>减少计算量，降低过拟合程度</strong></p>
+<p><strong>池化的动机</strong>: </p>
+<ol>
+<li>一般情况下卷积层的stride是1或2，kernel size是$3\times 3$，因此会学习到一些冗余的特征，池化的目的是为了减少冗余，也就意味这降低噪音</li>
+<li>对卷积学习的特征进行聚合(邻近区域特征的统计计算)，并学习到具有不变性(translation/rotation/scaling invariant)的特征，比如max pooling，在一个窗口下，不论最大值在什么地方，最后结果都是这个值，即特征是否存在而非特征具体位置</li>
+<li>引入非线性</li>
+</ol>
+<p>按照窗口的移动方式来区分，可以分为general pooling和overlapping pooling</p>
+<ul>
+<li>General Pooling: 池化窗口的大小 = 窗口位移(stride)的大小，说明任何像素被重复计算</li>
+<li>Overlapping Pooling: 池化窗口的大小 &gt; 窗口位移(stride)的大小，该论文中，overlapping pooling的效果要好于general pooling的效果，因为可以学习到更多的特征</li>
+</ul>
+<p>按照计算方式区分，可以分为max pooling, average pooling等等</p>
+
       
     </div>
     
@@ -518,7 +535,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Net"><span class="nav-number">1.</span> <span class="nav-text">Net</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Conv"><span class="nav-number">2.</span> <span class="nav-text">Conv</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReLU"><span class="nav-number">3.</span> <span class="nav-text">ReLU</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#预处理"><span class="nav-number">1.</span> <span class="nav-text">预处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积-amp-池化"><span class="nav-number">2.</span> <span class="nav-text">卷积 & 池化</span></a></li></ol></div>
             
 
           </div>
