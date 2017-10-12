@@ -342,8 +342,7 @@
       
         
           
-            <h3 id="Markov-Decision-Processes"><a href="#Markov-Decision-Processes" class="headerlink" title="Markov Decision Processes"></a>Markov Decision Processes</h3><p>马尔科夫决策过程的定义</p>
-<ul>
+            <h3 id="Markov-Decision-Processes-定义与相关概念"><a href="#Markov-Decision-Processes-定义与相关概念" class="headerlink" title="Markov Decision Processes 定义与相关概念"></a>Markov Decision Processes 定义与相关概念</h3><ul>
 <li>一组状态(states), $s\in S$</li>
 <li>一组行为(actions), $a\in A$</li>
 <li>一个转移方程(transition function), $T(s, a, s’)$, 意为从状态$s$转到新状态$s’$的概率, $P(s’|s, a)$</li>
@@ -368,11 +367,55 @@
 <li>最优策略是效用最大化的策略</li>
 </ul>
 </li>
+<li>静态策略(stationary policies): 如果偏好是静态的，即$[a_1, a_2,…, ] &gt; [b_1, b_2, …] \to [r, a_1, a_2, …] &gt; [r, b_1, b_2, …]$，那么只有两种效用函数<ul>
+<li>累加效用: $U([r_0, r_1, …]) = r_0 + r_1 + r_2 +…$</li>
+<li>折扣效用: $U([r_0, r_1, …]) = r_0 + \gamma r_1 + \gamma^2 r_2…$</li>
+</ul>
+</li>
 <li>折扣(discounting): $\gamma$<ul>
 <li>计算机视角: 帮助算法收敛</li>
 <li>经济学假设: 在回报相同时，即刻的回报的效用，大于将来回报的效用</li>
 </ul>
 </li>
+</ul>
+<h3 id="例子-莫比乌斯环上的电动车"><a href="#例子-莫比乌斯环上的电动车" class="headerlink" title="例子: 莫比乌斯环上的电动车"></a>例子: 莫比乌斯环上的电动车</h3><ul>
+<li>状态: Cool, Warm, Overheated</li>
+<li>行为: Slow, Fast</li>
+<li>奖励: Slow +1; Fast +2; Fast &amp; Overheated -10</li>
+<li>问题: 如果这个电动车在莫比乌斯环上，我们可以得到无穷的奖励吗？</li>
+</ul>
+<p><strong>解决方案</strong></p>
+<p>需要假定<strong>Finite horizon</strong> (和深度限制搜索相似)</p>
+<ul>
+<li>行为在固定T步后结束(比如，汽车寿命是T)</li>
+<li>给定非静态策略($\pi$依赖于剩余时间)</li>
+</ul>
+<p><strong>折扣</strong>，假设$0 &lt; \gamma &lt; 1$，此时小的$\gamma$意味着更关注短期效应</p>
+<script type="math/tex; mode=display">
+U([r_0, ..., r_{\infty}]) = 
+\sum^{\infty}_{t=0}\gamma^tr_t \le 
+\sum^{\infty}_{t=0}\gamma^tR_{max} = 
+\frac 1 {1-\gamma} R_{max}</script><p><strong>Absorbing state</strong>: 确保每个策略，都可能达到终止策略</p>
+<p><strong>概念声明</strong></p>
+<p>$V(s) = max_{a} Q(s, a)$: 状态$s$下效用最大的行为的效用</p>
+<p><img src="assets/rl_gridworld_v.png" alt=""></p>
+<p>$Q(s, a) = \sum_{s’}T(s,a,s’)[R(s, a, s’) + \gamma V(s’)]$:  状态$s$下并采取$a$行为后的效用最大的行为的效用</p>
+<p><img src="assets/rl_gridworld_q.png" alt=""></p>
+<p>$\pi(s) = argmax_{a} Q(s, a)$: 状态$s$下的效用最优的行为</p>
+<h3 id="Value-Iteration"><a href="#Value-Iteration" class="headerlink" title="Value Iteration"></a>Value Iteration</h3><ul>
+<li>以$V_0(s) = 0$为开始</li>
+<li>计算得到$V_k(s)$的值，在每个状态得到效用做大的行为</li>
+</ul>
+<script type="math/tex; mode=display">
+V_{k+1}(s) \leftarrow max_a\sum_{s'}T(s, a, s')[R(s, a, s') + \gamma V_k(s')]</script><ul>
+<li>重复至收敛</li>
+<li>每次迭代的复杂度$O(S^2A)$</li>
+</ul>
+<h4 id="收敛证明"><a href="#收敛证明" class="headerlink" title="收敛证明"></a>收敛证明</h4><ul>
+<li>假设$\gamma &lt; 1$，对任何状态$V_k, V_{k+1}$，两者的不同是在于最底层$V_{k+1}$是当前的回报，$V_k$是0</li>
+<li>最底层的的回报的区间在$[R_{min}, R_{max}]$，但都有$\gamma^k$的折扣</li>
+<li>所以$0 \le V_{k+1} - V_k \le \gamma^k max|R| \to lim_{k\to \infty} (V_{k+1} - V_k) = 0$</li>
+<li>所以value是收敛的</li>
 </ul>
 
           
