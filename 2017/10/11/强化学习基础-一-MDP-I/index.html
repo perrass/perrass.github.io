@@ -87,13 +87,13 @@
 <meta property="og:site_name" content="Shelter">
 <meta property="og:description" content="Markov Decision Processes 定义与相关概念 一组状态(states), $s\in S$ 一组行为(actions), $a\in A$ 一个转移方程(transition function), $T(s, a, s’)$, 意为从状态$s$转到新状态$s’$的概率, $P(s’|s, a)$ 一个奖励方程(reward function), $R(s, a, s’)$ 一">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2017/10/11/强化学习基础-一-MDP-I/assets/rl_gridworld_v.png">
-<meta property="og:image" content="http://yoursite.com/2017/10/11/强化学习基础-一-MDP-I/assets/rl_gridworld_q.png">
-<meta property="og:updated_time" content="2017-10-12T07:20:03.887Z">
+<meta property="og:image" content="http://yoursite.com/2017/10/11/强化学习基础-一-MDP-I/rl_gridworld_v.png">
+<meta property="og:image" content="http://yoursite.com/2017/10/11/强化学习基础-一-MDP-I/rl_gridworld_q.png">
+<meta property="og:updated_time" content="2017-10-12T07:28:22.749Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="强化学习基础(一) -- MDP(I)">
 <meta name="twitter:description" content="Markov Decision Processes 定义与相关概念 一组状态(states), $s\in S$ 一组行为(actions), $a\in A$ 一个转移方程(transition function), $T(s, a, s’)$, 意为从状态$s$转到新状态$s’$的概率, $P(s’|s, a)$ 一个奖励方程(reward function), $R(s, a, s’)$ 一">
-<meta name="twitter:image" content="http://yoursite.com/2017/10/11/强化学习基础-一-MDP-I/assets/rl_gridworld_v.png">
+<meta name="twitter:image" content="http://yoursite.com/2017/10/11/强化学习基础-一-MDP-I/rl_gridworld_v.png">
 
 
 
@@ -401,9 +401,9 @@ U([r_0, ..., r_{\infty}]) =
 \frac 1 {1-\gamma} R_{max}</script><p><strong>Absorbing state</strong>: 确保每个策略，都可能达到终止策略</p>
 <p><strong>概念声明</strong></p>
 <p>$V(s) = max_{a} Q(s, a)$: 状态$s$下效用最大的行为的效用</p>
-<p><img src="assets/rl_gridworld_v.png" alt=""></p>
+<p><img src="/2017/10/11/强化学习基础-一-MDP-I/rl_gridworld_v.png" alt=""></p>
 <p>$Q(s, a) = \sum_{s’}T(s,a,s’)[R(s, a, s’) + \gamma V(s’)]$:  状态$s$下并采取$a$行为后的效用最大的行为的效用</p>
-<p><img src="assets/rl_gridworld_q.png" alt=""></p>
+<p><img src="/2017/10/11/强化学习基础-一-MDP-I/rl_gridworld_q.png" alt=""></p>
 <p>$\pi(s) = argmax_{a} Q(s, a)$: 状态$s$下的效用最优的行为</p>
 <h3 id="Value-Iteration"><a href="#Value-Iteration" class="headerlink" title="Value Iteration"></a>Value Iteration</h3><ul>
 <li>以$V_0(s) = 0$为开始</li>
