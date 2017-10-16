@@ -249,6 +249,178 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/16/强化学习基础-二-MDP-II/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chihao Long">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Shelter">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/16/强化学习基础-二-MDP-II/" itemprop="url">强化学习基础(二) -- MDP(II)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-16T11:31:35+08:00">
+                2017-10-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/强化学习/" itemprop="url" rel="index">
+                    <span itemprop="name">强化学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="The-Bellman-Equations"><a href="#The-Bellman-Equations" class="headerlink" title="The Bellman Equations"></a>The Bellman Equations</h3><p>通过循环效用最大化定义的最优效用，给出了这些最优效用的值，和接下来一步动作的关系</p>
+<blockquote>
+<p>Definition of optimal utility via expectimax recurrence gives a simple one-step lookahead relationship amongst optimal utility values</p>
+</blockquote>
+<script type="math/tex; mode=display">
+Q(s, a) = \sum_{s'}T(s, a, s')[R(s, a, s') + \gamma V(S')]\\
+V(s) = max_{a} \sum_{s'} T(s, a, s')[R(s, a, s')+\gamma V(s')]</script><p>上面两个公式就是Bellman等式</p>
+<h3 id="Policy-Iteration"><a href="#Policy-Iteration" class="headerlink" title="Policy Iteration"></a>Policy Iteration</h3><h4 id="Policy-Evaluation"><a href="#Policy-Evaluation" class="headerlink" title="Policy Evaluation"></a>Policy Evaluation</h4><p>除了计算每一步的最优效用(Value Iteration)，还可以计算固定策略下状态$s$的效用，此时，Bellman等式为</p>
+<script type="math/tex; mode=display">
+V^{\pi}(s) = \sum_{s'}T(s, \pi(s), s')[R(s, \pi(s), s') + \gamma V^{\pi}(s')]</script><p>然后利用迭代求解(类似value iteration)或者求解线性系统问题的方式来求解固定策略$\pi$下的效用值</p>
+<script type="math/tex; mode=display">
+\begin{align}
+V^{\pi}_0(s) & = 0\\
+V^{\pi}_{k+1}(s) & \leftarrow \sum_{s'}T(s, \pi(s), s')[R(s, \pi(s), s') + \gamma V^{\pi}_k(s')]
+\end{align}</script><p>效率是$O(s^2)$</p>
+<h4 id="Policy-Extraction"><a href="#Policy-Extraction" class="headerlink" title="Policy Extraction"></a>Policy Extraction</h4><p>从效用值中计算行为：一步的效用最大化</p>
+<script type="math/tex; mode=display">
+\pi(s) = argmax_a \sum_{s'}T(s, a, s')[R(s, a, s') + \gamma V(s')]</script><p>这个过程叫做策略提取(policy extraction)，因为策略是由效用值推理出来的</p>
+<p>从Q-values中计算行为：</p>
+<script type="math/tex; mode=display">
+\pi(s) = argmax_aQ(s, a)</script><h4 id="Value-Iteration的问题"><a href="#Value-Iteration的问题" class="headerlink" title="Value Iteration的问题"></a>Value Iteration的问题</h4><ol>
+<li>每次循环效率是$O(S^2A)$</li>
+<li>每个状态的max很少会改变</li>
+<li>在效用值收敛前，策略已经收敛了</li>
+</ol>
+<p>PS: 2/3还是效用低的意思</p>
+<h4 id="Policy-Iteration-1"><a href="#Policy-Iteration-1" class="headerlink" title="Policy Iteration"></a>Policy Iteration</h4><p>Policy evaluation: 计算一些固定策略的效用，直到收敛</p>
+<script type="math/tex; mode=display">
+V^{\pi}_{k+1}(s)  \leftarrow \sum_{s'}T(s, \pi(s), s')[R(s, \pi(s), s') + \gamma V^{\pi}_k(s')]</script><p>Policy improvement: 更新接下来一步的策略 (update policy using one-step look-ahead with resulting converged (but not optimal) utilities as future values)</p>
+<script type="math/tex; mode=display">
+\pi(s) = argmax_a \sum_{s'}T(s, a, s')[R(s, a, s') + \gamma V(s')]</script><p>重复，知道策略收敛</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/11/强化学习基础-一-MDP-I/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -815,7 +987,7 @@ V_{k+1}(s) \leftarrow max_a\sum_{s'}T(s, a, s')[R(s, a, s') + \gamma V_k(s')]</s
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
